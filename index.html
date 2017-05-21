@@ -1,33 +1,30 @@
-<!--https://gist.github.com/clarle/3180770-->
-
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('#user-submit').click(function () {
-                var payload = {
-                    name: $('#user-name').val()
-                };
-                $.ajax({
-                    url: "/users",
-                    type: "POST",
-                    contentType: "application/json",
-                    processData: false,
-                    data: JSON.stringify(payload),
-                    complete: function (data) {
-                        $('#output').html(data.responseText);
-                    }
-                });
-            });
-        });
-    </script>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="http://scriptjava.net/source/scriptjava/scriptjava.js"></script>
+    <title>TitleTest</title>
 </head>
 <body>
 <h3>Enter a username to enter into the database:</h3>
-<input id="user-name" type="text" />
-<input id="user-submit" type="submit" />
-<p id="output"></p>
+    <input id="user-name" type="text" />
+    <input id="user-submit" type="submit" onclick="SendGet()"/>
+    <p id="result"></p>
+
+<script type="text/javascript">
+    function SendGet() {
+        //отправляю GET запрос и получаю ответ
+        $$a({
+            type:'get',//тип запроса: get,post либо head
+            url:'http://localhost:3000',//url адрес файла обработчика
+            data:{'id':'10', 'name':$$("user-name").value},//параметры запроса document.getElementById("")
+            response:'text',//тип возвращаемого ответа text либо xml
+            success:function (data) {//возвращаемый результат от сервера
+                $$('result',$$('result').innerHTML+'<br />'+data);
+        }
+    });
+    }
+</script>
+
 </body>
 </html>

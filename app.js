@@ -1,4 +1,5 @@
 // Module dependencies
+//create table user (id int, name varchar(20));
 
 var express    = require('express'),
     mysql      = require('mysql');
@@ -7,51 +8,32 @@ var express    = require('express'),
 
 var connection = mysql.createConnection({
     host     : 'localhost',
-    user     : 'admin',
-    password : 'admin'
+    user     : 'root',
+    password : 'admin',
+    database: 'tryexpress'
 });
 
 var app = express();
-// var app = module.exports = express.createServer();
 
-// Database setup
-
-// connection.query('CREATE DATABASE IF NOT EXISTS testGit', function (err) {
-//     if (err) throw err;
-//     connection.query('USE testGit', function (err) {
-//         if (err) throw err;
-//         connection.query('CREATE TABLE IF NOT EXISTS users('
-//             + 'id INT NOT NULL AUTO_INCREMENT,'
-//             + 'PRIMARY KEY(id),'
-//             + 'name VARCHAR(30)'
-//             +  ')', function (err) {
-//             if (err) throw err;
-//         });
-//     });
-// });
-
-// Configuration
-
-app.use(express.bodyParser());
-
-// Main route sends our HTML file
-
-app.get('/', function(req, res) {
-    res.sendfile(__dirname + '/index.html');
+connection.connect(function(err) {
+    if (err) throw err;
+    console.log('You are now connected...');
 });
 
-// Update MySQL database
+app.get('/', function (req, res) {
 
-app.post('/users', function (req, res) {
-    connection.query('INSERT INTO users SET ?', req.body,
-        function (err, result) {
-            if (err) throw err;
-            res.send('User added to database with ID: ' + result.insertId);
-        }
-    );
+    var params = {
+        id : /=(\d+)&/.exec(req.url)[1],
+        name : /name=(.*)/.exec(req.url)[1]
+    };
+
+    connection.query('INSERT INTO user SET ?', params, function(err, result) {
+        if (err) throw err;});
+    res.send('Some value is added to db');
 });
+
 
 // Begin listening
-
-app.listen(3000);
-console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
+app.listen(3000, function () {
+    console.log('Example app listening on port 3000!');
+});
