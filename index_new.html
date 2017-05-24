@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+
+    <title>User data</title>
+
+</head>
+<body>
+    <h3>Enter user data to write to database:</h3>
+    <p>UserName: </p><input id="user-name" type="text" />
+    <p>Password: </p><input id="user-pass" type="text" />
+    <p>Email: </p><input id="user-email" type="text" />
+
+    <input id="user-send" type="submit" value="Send"/>
+    <p id="send-status"></p>
+
+    <h3>Enter email in order to get username and password:</h3>
+    <p>Email: </p><input id="user-email-saved" type="text" />
+    <input id="user-get" type="submit" value="Get"/>
+    <p id="user-name-saved"></p>
+    <p id="user-pass-saved"></p>
+
+    <script src="execute.js"></script>
+</body>
+</html>
